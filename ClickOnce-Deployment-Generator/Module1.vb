@@ -33,7 +33,7 @@ Module Module1
             RunProgram(options.MageFilename, $"-Sign ""{manifestName}"" -CertFile ""{options.KeyFilename}"" -Password {options.KeyPassword}")
 
             'Create the deployment (.application)
-            RunProgram(options.MageFilename, $"-New Deployment -Processor ""{options.Architecture}"" -Install true -Publisher ""{options.Publisher}"" -version ""{version}"" -ProviderUrl ""{options.ProviderUrl}"" -AppManifest ""{manifestName}"" -UseManifestForTruest true -ToFile ""{deploymentName}""")
+            RunProgram(options.MageFilename, $"-New Deployment -Processor ""{options.Architecture}"" -Install true -Publisher ""{options.Publisher}"" -version ""{version}"" -ProviderUrl ""{options.ProviderUrl}"" -AppManifest ""{manifestName}"" -UseManifestForTrust true -ToFile ""{deploymentName}""")
 
             'Sign the deployment
             RunProgram(options.MageFilename, $"-Sign ""{deploymentName}"" -CertFile ""{options.KeyFilename}"" -Password {options.KeyPassword}")
@@ -64,7 +64,7 @@ Module Module1
     End Sub
 
     Sub OnOutput(sender As Object, e As DataReceivedEventArgs)
-        Console.Write(e.Data)
+        Console.WriteLine(e.Data)
     End Sub
 
 End Module
