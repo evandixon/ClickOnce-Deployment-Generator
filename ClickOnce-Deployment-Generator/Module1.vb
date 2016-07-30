@@ -20,8 +20,8 @@ Module Module1
             IO.Directory.CreateDirectory("Deploy")
             My.Computer.FileSystem.CopyDirectory(originalSourceDirectory, newSourceDirectory)
 
-            Dim manifestName As String = IO.Path.Combine("Deploy", version, IO.Path.GetFileName(options.Executable) & ".manifest")
-            Dim deploymentName As String = IO.Path.Combine("Deploy", IO.Path.GetFileName(options.Executable) & ".application")
+            Dim manifestName As String = IO.Path.Combine("Deploy", version, IO.Path.GetFileName(options.Executable) & ".manifest") 'Something.exe.manifest
+            Dim deploymentName As String = IO.Path.Combine("Deploy", IO.Path.GetFileNameWithoutExtension(options.Executable) & ".application") 'Something.application
 
             'Create the manifest
             RunProgram(options.MageFilename, $"-New Application -Processor ""{options.Architecture}"" -ToFile ""{manifestName}"" -version ""{version}"" -name ""{exeAssembly.GetName.Name}"" -FromDirectory ""{newSourceDirectory}""")
