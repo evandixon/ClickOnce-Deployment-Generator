@@ -15,7 +15,7 @@ Module Module1
             'Copy the source files (e.g. from bin\Release to bin\Deploy\1.0.0.0)
             Dim newSourceDirectory = IO.Path.Combine("Deploy", version)
             If IO.Directory.Exists("Deploy") Then
-                IO.Directory.Delete("Deploy")
+                IO.Directory.Delete("Deploy", True)
             End If
             IO.Directory.CreateDirectory("Deploy")
             My.Computer.FileSystem.CopyDirectory(originalSourceDirectory, newSourceDirectory)
