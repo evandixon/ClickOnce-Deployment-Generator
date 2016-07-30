@@ -30,13 +30,13 @@ Module Module1
             'Todo: rename all files but the manifest to "*.deploy"
 
             'Sign the manifest
-            RunProgram(options.MageFilename, $"-Sign ""{manifestName}"" -CertFile ""{options.KeyFilename}"" -Password {options.KeyPassword}")
+            RunProgram(options.MageFilename, $"-Sign ""{manifestName}"" -CertHash ""{options.CertificateHash}""")
 
             'Create the deployment (.application)
             RunProgram(options.MageFilename, $"-New Deployment -Processor ""{options.Architecture}"" -Install true -Publisher ""{options.Publisher}"" -version ""{version}"" -ProviderUrl ""{options.ProviderUrl}"" -AppManifest ""{manifestName}"" -UseManifestForTrust true -ToFile ""{deploymentName}""")
 
             'Sign the deployment
-            RunProgram(options.MageFilename, $"-Sign ""{deploymentName}"" -CertFile ""{options.KeyFilename}"" -Password {options.KeyPassword}")
+            RunProgram(options.MageFilename, $"-Sign ""{deploymentName}"" -CertHash ""{options.CertificateHash}""")
         End If
     End Sub
 
