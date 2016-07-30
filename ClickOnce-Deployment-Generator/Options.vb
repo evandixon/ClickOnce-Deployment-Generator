@@ -11,9 +11,6 @@ Public Class Options
     <[Option]("p"c, "Publisher", HelpText:="Name of the publisher of the deployment.", Required:=True)>
     Public Property Publisher As String
 
-    <[Option]("a"c, "Architecture", HelpText:="Architecture of the processor.  Valid values: ""msil"", ""x86"", and ""x64"".", Required:=True)>
-    Public Property Architecture As String
-
     <[Option]("h"c, "Certificate Hash", HelpText:="Hash of the certificate used for signing.", Required:=True)>
     Public Property CertificateHash As String
 

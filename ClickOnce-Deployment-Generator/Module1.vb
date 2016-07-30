@@ -7,6 +7,7 @@ Module Module1
         If CommandLine.Parser.Default.ParseArguments(Environment.GetCommandLineArgs, options) Then
             Dim exeAssembly As Assembly = Assembly.ReflectionOnlyLoadFrom(options.Executable)
             Dim version = exeAssembly.GetName.Version.ToString
+            Dim architecture = exeAssembly.GetName.ProcessorArchitecture.ToString
 
             'If the executable is in bin\Release\Something.exe, we want the working directory to be bin
             Dim originalSourceDirectory = IO.Path.GetFileName(IO.Path.GetDirectoryName(options.Executable)) 'Should be Release in this example
@@ -24,7 +25,7 @@ Module Module1
             Dim deploymentName As String = IO.Path.Combine("Deploy", IO.Path.GetFileNameWithoutExtension(options.Executable) & ".application") 'Something.application
 
             'Create the manifest
-            RunProgram(options.MageFilename, $"-New Application -Processor ""{options.Architecture}"" -ToFile ""{manifestName}"" -version ""{version}"" -name ""{exeAssembly.GetName.Name}"" -FromDirectory ""{newSourceDirectory}""")
+            RunProgram(options.MageFilename, $"-New Application -Processor ""{architecture}"" -ToFile ""{manifestName}"" -version ""{version}"" -name ""{exeAssembly.GetName.Name}"" -FromDirectory ""{newSourceDirectory}""")
 
             'Todo: enable extension mapping
             'Todo: rename all files but the manifest to "*.deploy"
@@ -33,7 +34,7 @@ Module Module1
             RunProgram(options.MageFilename, $"-Sign ""{manifestName}"" -CertHash ""{options.CertificateHash}""")
 
             'Create the deployment (.application)
-            RunProgram(options.MageFilename, $"-New Deployment -Processor ""{options.Architecture}"" -Install true -Publisher ""{options.Publisher}"" -version ""{version}"" -ProviderUrl ""{options.ProviderUrl}"" -AppManifest ""{manifestName}"" -UseManifestForTrust true -ToFile ""{deploymentName}""")
+            RunProgram(options.MageFilename, $"-New Deployment -Processor ""{architecture}"" -Install true -Publisher ""{options.Publisher}"" -version ""{version}"" -ProviderUrl ""{options.ProviderUrl}"" -AppManifest ""{manifestName}"" -UseManifestForTrust true -ToFile ""{deploymentName}""")
 
             'Sign the deployment
             RunProgram(options.MageFilename, $"-Sign ""{deploymentName}"" -CertHash ""{options.CertificateHash}""")
