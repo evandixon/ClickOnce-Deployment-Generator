@@ -41,12 +41,30 @@ Module Module1
     End Sub
 
     Sub RunProgram(program As String, arguments As String)
-        Dim p As New Process
-        p.StartInfo.WorkingDirectory = Environment.CurrentDirectory
-        p.StartInfo.FileName = program
-        p.StartInfo.Arguments = arguments
-        p.Start()
-        p.WaitForExit()
+        Using p As New Process
+            p.StartInfo.WorkingDirectory = Environment.CurrentDirectory
+            p.StartInfo.FileName = program
+            p.StartInfo.Arguments = arguments
+            p.StartInfo.UseShellExecute = False
+            p.StartInfo.RedirectStandardOutput = True
+            p.StartInfo.RedirectStandardError = True
+            p.Start()
+
+            AddHandler p.OutputDataReceived, AddressOf OnOutput
+            AddHandler p.ErrorDataReceived, AddressOf OnOutput
+
+            p.BeginOutputReadLine()
+            p.BeginErrorReadLine()
+
+            p.WaitForExit()
+
+            RemoveHandler p.OutputDataReceived, AddressOf OnOutput
+            RemoveHandler p.ErrorDataReceived, AddressOf OnOutput
+        End Using
+    End Sub
+
+    Sub OnOutput(sender As Object, e As DataReceivedEventArgs)
+        Console.Write(e.Data)
     End Sub
 
 End Module
