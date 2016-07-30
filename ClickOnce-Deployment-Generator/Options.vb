@@ -14,13 +14,13 @@ Public Class Options
     <[Option]("a"c, "Architecture", HelpText:="Architecture of the processor.  Valid values: ""msil"", ""x86"", and ""x64"".", Required:=True)>
     Public Property Architecture As String
 
-    <[Option]("KeyFilename", HelpText:="Filename of the key used for signing.", Required:=True)>
+    <[Option]("k"c, "KeyFilename", HelpText:="Filename of the key used for signing.", Required:=True)>
     Public Property KeyFilename As String
 
-    <[Option]("KeyPassword", HelpText:="Password of the key used for signing.", Required:=True)>
+    <[Option]("s"c, "KeyPassword", HelpText:="Password of the key used for signing.", Required:=True)>
     Public Property KeyPassword As String
 
-    <[Option]("MageFilename", HelpText:="Path of mage.exe", Required:=True)>
+    <[Option]("m"c, "MageFilename", HelpText:="Path of mage.exe", Required:=True)>
     Public Property MageFilename As String
 
     <HelpOption>
