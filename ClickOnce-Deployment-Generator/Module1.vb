@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Reflection
+Imports System.Drawing.IconLib
 
 Module Module1
 
@@ -27,9 +28,15 @@ Module Module1
             Dim deploymentName As String = IO.Path.Combine("Deploy", IO.Path.GetFileNameWithoutExtension(options.Executable) & ".application") 'Something.application
 
             'Extract the icon
-            Using iconStream As New IO.FileStream(iconName, FileMode.OpenOrCreate)
-                System.Drawing.Icon.ExtractAssociatedIcon(options.Executable).Save(iconStream)
-            End Using
+            Dim mIcon As New MultiIcon()
+            Dim sIcon = mIcon.Add("Main")
+            sIcon.CreateFrom(options.Executable, IconOutputFormat.FromWin95)
+            sIcon.Save(iconName)
+
+            '' Old way of extracting icon; color was lost
+            'Using iconStream As New IO.FileStream(iconName, FileMode.OpenOrCreate)
+            '    System.Drawing.Icon.ExtractAssociatedIcon(options.Executable).Save(iconStream)
+            'End Using
 
             'Create the manifest
             RunProgram(options.MageFilename, $"-New Application -Processor ""{architecture}"" -ToFile ""{manifestName}"" -version ""{version}"" -name ""{exeAssembly.GetName.Name}"" -FromDirectory ""{newSourceDirectory}"" -IconFile ""{IO.Path.GetFileName(iconName)}""")
