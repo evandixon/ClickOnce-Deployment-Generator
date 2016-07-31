@@ -1,4 +1,5 @@
-﻿Imports System.Reflection
+﻿Imports System.IO
+Imports System.Reflection
 
 Module Module1
 
@@ -22,10 +23,16 @@ Module Module1
             My.Computer.FileSystem.CopyDirectory(originalSourceDirectory, newSourceDirectory)
 
             Dim manifestName As String = IO.Path.Combine("Deploy", version, IO.Path.GetFileName(options.Executable) & ".manifest") 'Something.exe.manifest
+            Dim iconName As String = IO.Path.Combine("Deploy", version, IO.Path.GetFileName(options.Executable) & ".ico") 'Something.exe.ico
             Dim deploymentName As String = IO.Path.Combine("Deploy", IO.Path.GetFileNameWithoutExtension(options.Executable) & ".application") 'Something.application
 
+            'Extract the icon
+            Using iconStream As New IO.FileStream(iconName, FileMode.OpenOrCreate)
+                System.Drawing.Icon.ExtractAssociatedIcon(options.Executable).Save(iconStream)
+            End Using
+
             'Create the manifest
-            RunProgram(options.MageFilename, $"-New Application -Processor ""{architecture}"" -ToFile ""{manifestName}"" -version ""{version}"" -name ""{exeAssembly.GetName.Name}"" -FromDirectory ""{newSourceDirectory}""")
+            RunProgram(options.MageFilename, $"-New Application -Processor ""{architecture}"" -ToFile ""{manifestName}"" -version ""{version}"" -name ""{exeAssembly.GetName.Name}"" -FromDirectory ""{newSourceDirectory}"" -IconFile ""{iconName}""")
 
             'Todo: enable extension mapping
             'Todo: rename all files but the manifest to "*.deploy"
