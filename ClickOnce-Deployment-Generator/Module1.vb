@@ -33,7 +33,7 @@ Module Module1
             End Using
 
             'Create the manifest
-            RunProgram(options.MageFilename, $"-New Application -Processor ""{architecture}"" -ToFile ""{manifestName}"" -version ""{version}"" -name ""{exeAssembly.GetName.Name}"" -FromDirectory ""{newSourceDirectory}"" -IconFile ""{IO.Path.GetFileName(iconName)}""")
+            RunProgram(options.MageFilename, $"-New Application -Processor ""{architecture}"" -ToFile ""{manifestName}"" -version ""{version}"" -name ""{exeAssembly.GetName.Name}"" -FromDirectory ""{newSourceDirectory}"" -IconFile ""{IO.Path.GetFileName(iconName)}"" -s ""{options.SupportUrl}""")
 
             'Todo: enable extension mapping
             'Todo: rename all files but the manifest to "*.deploy"
@@ -42,7 +42,7 @@ Module Module1
             RunProgram(options.MageFilename, $"-Sign ""{manifestName}"" -CertHash ""{options.CertificateHash}""")
 
             'Create the deployment (.application)
-            RunProgram(options.MageFilename, $"-New Deployment -Processor ""{architecture}"" -Install true -Publisher ""{options.Publisher}"" -version ""{version}"" -ProviderUrl ""{options.ProviderUrl}"" -AppManifest ""{manifestName}"" -UseManifestForTrust true -ToFile ""{deploymentName}""")
+            RunProgram(options.MageFilename, $"-New Deployment -Processor ""{architecture}"" -Install true -Publisher ""{options.Publisher}"" -version ""{version}"" -ProviderUrl ""{options.ProviderUrl}"" -AppManifest ""{manifestName}"" -UseManifestForTrust true -ToFile ""{deploymentName}"" -s ""{options.SupportUrl}""")
 
             'Sign the deployment
             RunProgram(options.MageFilename, $"-Sign ""{deploymentName}"" -CertHash ""{options.CertificateHash}""")
