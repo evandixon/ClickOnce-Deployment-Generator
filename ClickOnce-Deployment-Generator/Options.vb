@@ -17,6 +17,9 @@ Public Class Options
     <[Option]("m"c, "MageFilename", HelpText:="Path of mage.exe", Required:=True)>
     Public Property MageFilename As String
 
+    <[Option]("s"c, "SupportUrl", HelpText:="Support URL, as shown in Add/Remove programs", Required:=True)>
+    Public Property SupportUrl As String
+
     <HelpOption>
     Public Function GetUsage() As String
         Return "Usage documentation not added yet :("
