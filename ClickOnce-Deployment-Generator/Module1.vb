@@ -33,7 +33,7 @@ Module Module1
             End Using
 
             'Create the manifest
-            RunProgram(options.MageFilename, $"-New Application -Processor ""{architecture}"" -ToFile ""{manifestName}"" -version ""{version}"" -name ""{exeAssembly.GetName.Name}"" -FromDirectory ""{newSourceDirectory}"" -IconFile ""{IO.Path.GetFileName(iconName)}"" -s ""{options.SupportUrl}""")
+            RunProgram(options.MageFilename, $"-New Application -Processor ""{architecture}"" -ToFile ""{manifestName}"" -version ""{version}"" -name ""{exeAssembly.GetName.Name}"" -FromDirectory ""{newSourceDirectory}"" -IconFile ""{IO.Path.GetFileName(iconName)}""")
 
             'Todo: enable extension mapping
             'Todo: rename all files but the manifest to "*.deploy"
